@@ -1,0 +1,5 @@
+MaxHomes: 5
+TeleportDelay: 5
+TeleportDelayBar: true
+SuggestHomeTeleportOnJoin: true
+SuggestHomeTeleportDistance: 200

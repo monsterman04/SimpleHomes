@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SimpleHomes:jar">
+    <output-path>$PROJECT_DIR$/../../Test Spigot Server/plugins</output-path>
+    <root id="archive" name="SimpleHomes.jar">
+      <element id="module-output" name="SimpleHomes" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../Test Spigot Server/server.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
