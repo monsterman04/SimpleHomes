@@ -1,4 +1,4 @@
-package com.monsterman04.SimpleHomes;
+package me.monsterman04.SimpleHomes;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;

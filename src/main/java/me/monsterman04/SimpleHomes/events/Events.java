@@ -1,7 +1,7 @@
-package com.monsterman04.SimpleHomes.events;
+package me.monsterman04.SimpleHomes.events;
 
-import com.monsterman04.SimpleHomes.HomeManager;
-import com.monsterman04.SimpleHomes.Main;
+import me.monsterman04.SimpleHomes.HomeManager;
+import me.monsterman04.SimpleHomes.Main;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

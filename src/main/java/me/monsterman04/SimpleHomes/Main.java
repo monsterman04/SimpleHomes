@@ -1,8 +1,8 @@
-package com.monsterman04.SimpleHomes;
+package me.monsterman04.SimpleHomes;
 
-import com.monsterman04.SimpleHomes.commands.Commands;
-import com.monsterman04.SimpleHomes.commands.HomeTabComplete;
-import com.monsterman04.SimpleHomes.events.Events;
+import me.monsterman04.SimpleHomes.commands.Commands;
+import me.monsterman04.SimpleHomes.commands.HomeTabComplete;
+import me.monsterman04.SimpleHomes.events.Events;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
