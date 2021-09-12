@@ -42,15 +42,17 @@ public class Commands implements CommandExecutor {
                     int num = HomeManager.getHomeByName(player, "Home");
                     if(plugin.getConfig().getLocation("Players." + player.getName() + ".Home" + num +".Location") != null){
                         Location location = plugin.getConfig().getLocation("Players." + player.getName() + ".Home" + num +".Location");
+                        String name = plugin.getConfig().getString("Players." + player.getName() + ".Home" + num +".Name");
                         if (location != null) {
-                            HomeManager.teleport(player , location);
+                            HomeManager.teleport(player , location, name);
                         }
                     }else{
                         for (int i = 2; i <= HomeManager.checkMaxHouses(); i++){
                             if(plugin.getConfig().getLocation("Players." + player.getName() + ".Home" + i +".Location") != null){
                                 Location location = plugin.getConfig().getLocation("Players." + player.getName() + ".Home" + i +".Location");
+                                String name = plugin.getConfig().getString("Players." + player.getName() + ".Home" + num +".Name");
                                 if (location != null) {
-                                    HomeManager.teleport(player , location);
+                                    HomeManager.teleport(player , location, name);
                                 }
                             }
                         }
@@ -61,8 +63,9 @@ public class Commands implements CommandExecutor {
                         int num = HomeManager.getHomeByName(player, args[0]);
                         if(plugin.getConfig().getLocation("Players." + player.getName() + ".Home" + num +".Location") != null){
                             Location location = plugin.getConfig().getLocation("Players." + player.getName() + ".Home" + num +".Location");
+                            String name = plugin.getConfig().getString("Players." + player.getName() + ".Home" + num +".Name");
                             if (location != null) {
-                                HomeManager.teleport(player , location);
+                                HomeManager.teleport(player , location, name);
                             }
                         }else{player.sendMessage(ChatColor.RED + "An error occurred while locating your home!");}
                     } else {player.sendMessage(ChatColor.RED + args[0] + " not found!");}

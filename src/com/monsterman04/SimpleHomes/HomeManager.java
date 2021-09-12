@@ -209,9 +209,9 @@ public class HomeManager {
 
         player.sendMessage(ChatColor.GREEN + name + " successfully created!");
     }
-    public static void teleport(Player player, Location location){
+    public static void teleport(Player player, Location location, String name){
         if (plugin.getConfig().getBoolean("TeleportDelayBar")) {
-            BossBar bar = Bukkit.createBossBar("Teleporting in: ", BarColor.BLUE, BarStyle.SOLID);
+            BossBar bar = Bukkit.createBossBar("Teleporting to " + name + " in: ", BarColor.BLUE, BarStyle.SOLID);
             bar.setVisible(true);
             bar.addPlayer(player);
 
@@ -234,7 +234,7 @@ public class HomeManager {
                     double time = d  / (delay * 1000);
                     DecimalFormat df = new DecimalFormat("0.0");
 
-                    bar.setTitle("Teleporting in: " + df.format(timeLeft));
+                    bar.setTitle("Teleporting to " + name + " in: " + df.format(timeLeft));
                     try {
                         bar.setProgress(time);
                     } catch (IllegalArgumentException exception) {
