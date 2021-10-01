@@ -11,8 +11,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.*;
-import java.net.URL;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -39,7 +40,7 @@ public class Main extends JavaPlugin {
         Objects.requireNonNull(getCommand("simplehomestheme")).setTabCompleter(new ThemeTabComplete());
         getServer().getPluginManager().registerEvents(new Events(this), this);
         getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[" + pluginDescriptionFile.getName() + "] Plugin started!");
-        checkVersion();
+        new VersionManager(this).checkVersion();
 
         getConfig().options().copyDefaults(true);
         saveConfig();
@@ -53,27 +54,6 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable(){getServer().getConsoleSender().sendMessage(ChatColor.RED + "[" + pluginDescriptionFile.getName() + "] Plugin closed!");}
 
-    private void checkVersion(){
-        try {
-            int pluginID = 96179;
-            URL url = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + pluginID);
-            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-            String version = in.readLine();
-            in.close();
-            if (version != null) {
-                if(version.equals(pluginDescriptionFile.getVersion())){
-                    getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[" + pluginDescriptionFile.getName() + "] Current version: " + pluginDescriptionFile.getVersion() + ", this is the latest version!");
-                }else {
-                    getServer().getConsoleSender().sendMessage(ChatColor.RED + "[" + pluginDescriptionFile.getName() + "] This plugin is out of date!");
-                    getServer().getConsoleSender().sendMessage(ChatColor.RED + "[" + pluginDescriptionFile.getName() + "] Current version: " + pluginDescriptionFile.getVersion() + ", Latest version is: " + version);
-                    getServer().getConsoleSender().sendMessage(ChatColor.RED + "You can download the latest version here: https://www.spigotmc.org/resources/simplehomes.96179/");
-                }
-            }
-        }
-        catch (java.io.IOException e1) {
-            getServer().getConsoleSender().sendMessage(ChatColor.RED + "[" + pluginDescriptionFile.getName() + "] Unable to find the latest version!");
-        }
-    }
     private void createConfigHelpFile(){
         //region Help String
         List<String> contents = new ArrayList<>();
