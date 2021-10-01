@@ -12,11 +12,15 @@ import java.util.List;
 @SuppressWarnings("NullableProblems")
 public class HomeTabComplete implements TabCompleter {
 
+    private HomeManager homeManager;
+
+    public HomeTabComplete(HomeManager homeManager){this.homeManager = homeManager;}
+
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args){
 
         if(args.length == 1){
             List<String> result = new ArrayList<>();
-            List<String> list = new ArrayList<>(HomeManager.allNames((Player) sender));
+            List<String> list = new ArrayList<>(homeManager.allNames((Player) sender));
 
             for(String s : list){
                 if(s.toLowerCase().startsWith(args[0].toLowerCase())){result.add(s);}

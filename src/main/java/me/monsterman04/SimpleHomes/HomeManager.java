@@ -1,5 +1,6 @@
 package me.monsterman04.SimpleHomes;
 
+import me.monsterman04.SimpleHomes.themes.Theme;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -7,7 +8,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
@@ -21,9 +21,15 @@ import java.util.*;
 @SuppressWarnings({"deprecation"})
 public class HomeManager {
 
-    static Main plugin = Main.getPlugin(Main.class);
+    private static Main plugin;
+    private Theme theme;
 
-    public static void joinSetup(Player player) {
+    public HomeManager(Main main){
+        plugin = main;
+        theme = plugin.getThemeManager().getTheme();
+    }
+
+    public void joinSetup(Player player) {
         int maxHomes = checkMaxHouses();
 
         if (!plugin.getConfig().contains("Players." + player.getName() + ".CurrentHomes")) {
@@ -40,7 +46,7 @@ public class HomeManager {
         deleteInvalidHouses(maxHomes, player);
         checkCurrentHouses(player);
     }
-    public static int checkMaxHouses() {
+    public int checkMaxHouses() {
         if (plugin.getConfig().getInt("MaxHomes") == 0 || plugin.getConfig().getInt("MaxHomes") > 50) {
             plugin.getConfig().set("MaxHomes", 5);
             plugin.saveConfig();
@@ -50,7 +56,7 @@ public class HomeManager {
             return plugin.getConfig().getInt("MaxHomes");
         }
     }
-    public static void checkCurrentHouses(Player player) {
+    public void checkCurrentHouses(Player player) {
         int total = 0;
         for (int i = 1; i <= checkMaxHouses(); i++) {
             if (plugin.getConfig().get("Players." + player.getName() + ".Home" + i + ".Empty") == Boolean.FALSE) {
@@ -61,7 +67,7 @@ public class HomeManager {
         plugin.getConfig().set("Players." + player.getName() + ".CurrentHomes", total);
         plugin.saveConfig();
     }
-    public static boolean containsName(Player player, String name) {
+    public boolean containsName(Player player, String name) {
         boolean contains = false;
         for (int i = 1; i <= checkMaxHouses(); i++) {
             if (plugin.getConfig().contains("Players." + player.getName() + ".Home" + i + ".Name") && Objects.requireNonNull(plugin.getConfig().getString("Players." + player.getName() + ".Home" + i + ".Name")).equalsIgnoreCase(name)) {
@@ -70,7 +76,7 @@ public class HomeManager {
         }
         return contains;
     }
-    public static List<String> allNames(Player player) {
+    public List<String> allNames(Player player) {
         List<String> list = new ArrayList<>();
         for (int i = 1; i <= checkMaxHouses(); i++) {
             if (plugin.getConfig().contains("Players." + player.getName() + ".Home" + i + ".Name")) {
@@ -79,7 +85,7 @@ public class HomeManager {
         }
         return list;
     }
-    public static void deleteInvalidHouses(int maxHomes, Player player) {
+    public void deleteInvalidHouses(int maxHomes, Player player) {
         for (int i = maxHomes + 1; i <= 60; i++) {
             if (plugin.getConfig().contains("Players." + player.getName() + ".Home" + i)) {
                 plugin.getConfig().set("Players." + player.getName() + ".Home" + i, null);
@@ -87,7 +93,7 @@ public class HomeManager {
             }
         }
     }
-    public static int getHomeByName(Player player, String name) {
+    public int getHomeByName(Player player, String name) {
         int num = 1;
         for (int i = 1; i <= checkMaxHouses(); i++) {
             if (plugin.getConfig().contains("Players." + player.getName() + ".Home" + i + ".Name")) {
@@ -98,7 +104,7 @@ public class HomeManager {
         }
         return num;
     }
-    public static int getHomeDistance(Player player, int number) {
+    public int getHomeDistance(Player player, int number) {
         if (plugin.getConfig().contains("Players." + player.getName() + ".Home" + number + ".Location")) {
             Location homeLocation = plugin.getConfig().getLocation("Players." + player.getName() + ".Home" + number + ".Location");
             Location playerLocation = player.getLocation();
@@ -115,7 +121,7 @@ public class HomeManager {
         }
         return -1;
     }
-    public static void suggestTeleportHome(Player player) {
+    public void suggestTeleportHome(Player player) {
         if(!plugin.getConfig().getBoolean("SuggestHomeTeleportOnJoin")){
             return;
         }
@@ -170,7 +176,7 @@ public class HomeManager {
         }
 
     }
-    public static HashMap<String, Integer> sortByValue(HashMap<String, Integer> hm) {
+    public HashMap<String, Integer> sortByValue(HashMap<String, Integer> hm) {
         List<Map.Entry<String, Integer>> list =
                 new LinkedList<>(hm.entrySet());
 
@@ -183,7 +189,7 @@ public class HomeManager {
         }
         return temp;
     }
-    public static void setHome(Player player, @Nullable String name_){
+    public void setHome(Player player, @Nullable String name_){
         int houseNumber = 6;
         for (int i = 1; i <= checkMaxHouses(); i++){
             if(plugin.getConfig().getBoolean("Players." + player.getName() + ".Home" + i +".Empty")){
@@ -209,9 +215,9 @@ public class HomeManager {
 
         player.sendMessage(ChatColor.GREEN + name + " successfully created!");
     }
-    public static void teleport(Player player, Location location, String name){
+    public void teleport(Player player, Location location, String name){
         if (plugin.getConfig().getBoolean("TeleportDelayBar")) {
-            BossBar bar = Bukkit.createBossBar("Teleporting to " + name + " in: ", BarColor.BLUE, BarStyle.SOLID);
+            BossBar bar = Bukkit.createBossBar("Teleporting to " + name + " in: ", theme.getBarColor(), BarStyle.SOLID);
             bar.setVisible(true);
             bar.addPlayer(player);
 
@@ -260,7 +266,7 @@ public class HomeManager {
             }.runTaskTimer(plugin, 0, 0);
         }
     }
-    public static void deleteHome(Player player, String name){
+    public void deleteHome(Player player, String name){
         int i = getHomeByName(player, name);
         if(plugin.getConfig().contains("Players." + player.getName() + ".Home" + i +".Name") && Objects.requireNonNull(plugin.getConfig().getString("Players." + player.getName() + ".Home" + i + ".Name")).equalsIgnoreCase(name)){
             plugin.getConfig().set("Players." + player.getName() + ".Home" + i +".Empty", true);
@@ -273,5 +279,5 @@ public class HomeManager {
 
         }else{player.sendMessage(ChatColor.RED + name + " not found!");}
     }
-
+    public void reloadTheme(Theme theme){this.theme =theme;}
 }

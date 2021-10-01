@@ -10,17 +10,24 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class Events implements Listener {
 
-    @EventHandler
-    public static void playerJoin(PlayerJoinEvent event) {
-        final Player player = event.getPlayer();
-        final Main plugin = Main.getPlugin(Main.class);
+    private final Main plugin;
+    private final HomeManager homeManager;
+    public Events(Main main){
+        plugin = main;
+        homeManager = plugin.getHomeManager();
 
-        HomeManager.joinSetup(player);
+    }
+
+    @EventHandler
+    public void playerJoin(PlayerJoinEvent event) {
+        final Player player = event.getPlayer();
+
+        homeManager.joinSetup(player);
 
         new BukkitRunnable() {
             @Override
             public void run() {
-                HomeManager.suggestTeleportHome(player);
+                homeManager.suggestTeleportHome(player);
             }
         }.runTaskLater(plugin, 20);
     }

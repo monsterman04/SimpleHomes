@@ -3,3 +3,4 @@ TeleportDelay: 5
 TeleportDelayBar: true
 SuggestHomeTeleportOnJoin: true
 SuggestHomeTeleportDistance: 200
+Theme: BLUE

@@ -19,3 +19,13 @@ commands:
   selecthome:
     description: Home teleport menu
     usage: /<command>
+  simplehomestheme:
+    description: Using this command you can customise plugins Theme!
+    usage: /<command> <get/set>
+permissions:
+  simplehomes.homes:
+    description: Allows you to create, delete and teleport to your homes (/sethome, /home, /deletehome, /selecthome commands)
+    default: true
+  simplehomes.theme:
+    description: Allow you to set plugins theme (/simplehomestheme command)
+    default: op
