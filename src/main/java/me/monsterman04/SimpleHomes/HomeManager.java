@@ -139,7 +139,7 @@ public class HomeManager {
         if (firstKey.isPresent()) {
             String home = firstKey.get();
             int homeNum = getHomeByName(player , home);
-            player.sendMessage(ChatColor.AQUA + "It looks like you're far from home. Would you like to be teleported to " + home +  "?");
+            player.sendMessage(theme.getChatColor() + "It looks like you're far from home. Would you like to be teleported to " + home +  "?");
 
             //region [YES]
             TextComponent yes = new TextComponent("[YES]");
@@ -217,16 +217,17 @@ public class HomeManager {
     }
     public void teleport(Player player, Location location, String name){
         if (plugin.getConfig().getBoolean("TeleportDelayBar")) {
-            BossBar bar = Bukkit.createBossBar("Teleporting to " + name + " in: ", theme.getBarColor(), BarStyle.SOLID);
-            bar.setVisible(true);
-            bar.addPlayer(player);
-
             int delay = plugin.getConfig().getInt("TeleportDelay");
             long time = System.currentTimeMillis() + (delay * 1000L);
 
+            BossBar bar = Bukkit.createBossBar("Teleporting to " + name + " in: ", theme.getBarColor(), BarStyle.SOLID);
+            bar.setVisible(true);
+            if (delay != 0) {
+                bar.addPlayer(player);
+            }
+
+
             new BukkitRunnable() {
-
-
                 @Override
                 public void run() {
                     if(time - System.currentTimeMillis() <= 0.1){
@@ -254,8 +255,6 @@ public class HomeManager {
             long time = System.currentTimeMillis() + (delay * 1000L);
 
             new BukkitRunnable() {
-
-
                 @Override
                 public void run() {
                     if(time - System.currentTimeMillis() <= 0.1){
