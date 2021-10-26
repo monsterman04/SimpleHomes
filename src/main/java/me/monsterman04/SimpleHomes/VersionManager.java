@@ -38,10 +38,9 @@ public class VersionManager {
     }
 
     public void checkVersion(){
-        int pluginID = 96179;
         JSONObject json;
         try {
-            json = readJsonFromUrl("https://api.spiget.org/v2/resources/" + pluginID + "/versions/latest");
+            json = readJsonFromUrl("https://api.spiget.org/v2/resources/" + plugin.pluginID + "/versions/latest");
             currentVersion = pluginDescriptionFile.getVersion();
             String latestVersion = json.getString("name");
 

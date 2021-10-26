@@ -25,8 +25,12 @@ public class Main extends JavaPlugin {
     private HomeManager homeManager;
     private ThemeManager themeManager;
 
+    int metricsPluginID = 13158;
+    int pluginID = 96179;
+
     @Override
     public void onEnable(){
+        new Metrics(this, metricsPluginID);
         this.themeManager = new ThemeManager(this);
         this.homeManager = new HomeManager(this);
         Objects.requireNonNull(getCommand("sethome")).setExecutor(new Commands());

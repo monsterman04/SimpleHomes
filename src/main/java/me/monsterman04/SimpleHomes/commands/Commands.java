@@ -51,17 +51,17 @@ public class Commands implements CommandExecutor {
                 }else{
                     if(args.length == 0){
                         int num = homeManager.getHomeByName(player, "Home");
-                        if(plugin.getConfig().getLocation("Players." + player.getName() + ".Home" + num +".Location") != null){
-                            Location location = plugin.getConfig().getLocation("Players." + player.getName() + ".Home" + num +".Location");
-                            String name = plugin.getConfig().getString("Players." + player.getName() + ".Home" + num +".Name");
+                        if(plugin.getConfig().getLocation("Players." + player.getUniqueId() + ".Home" + num +".Location") != null){
+                            Location location = plugin.getConfig().getLocation("Players." + player.getUniqueId() + ".Home" + num +".Location");
+                            String name = plugin.getConfig().getString("Players." + player.getUniqueId() + ".Home" + num +".Name");
                             if (location != null) {
                                 homeManager.teleport(player , location, name);
                             }
                         }else{
                             for (int i = 2; i <= homeManager.checkMaxHouses(); i++){
-                                if(plugin.getConfig().getLocation("Players." + player.getName() + ".Home" + i +".Location") != null){
-                                    Location location = plugin.getConfig().getLocation("Players." + player.getName() + ".Home" + i +".Location");
-                                    String name = plugin.getConfig().getString("Players." + player.getName() + ".Home" + num +".Name");
+                                if(plugin.getConfig().getLocation("Players." + player.getUniqueId() + ".Home" + i +".Location") != null){
+                                    Location location = plugin.getConfig().getLocation("Players." + player.getUniqueId() + ".Home" + i +".Location");
+                                    String name = plugin.getConfig().getString("Players." + player.getUniqueId() + ".Home" + num +".Name");
                                     if (location != null) {
                                         homeManager.teleport(player , location, name);
                                     }
@@ -72,9 +72,9 @@ public class Commands implements CommandExecutor {
                     else if(args.length == 1){
                         if (homeManager.containsName(player, args[0])) {
                             int num = homeManager.getHomeByName(player, args[0]);
-                            if(plugin.getConfig().getLocation("Players." + player.getName() + ".Home" + num +".Location") != null){
-                                Location location = plugin.getConfig().getLocation("Players." + player.getName() + ".Home" + num +".Location");
-                                String name = plugin.getConfig().getString("Players." + player.getName() + ".Home" + num +".Name");
+                            if(plugin.getConfig().getLocation("Players." + player.getUniqueId() + ".Home" + num +".Location") != null){
+                                Location location = plugin.getConfig().getLocation("Players." + player.getUniqueId() + ".Home" + num +".Location");
+                                String name = plugin.getConfig().getString("Players." + player.getUniqueId() + ".Home" + num +".Name");
                                 if (location != null) {
                                     homeManager.teleport(player , location, name);
                                 }
@@ -92,8 +92,8 @@ public class Commands implements CommandExecutor {
                 StringBuilder message = new StringBuilder();
                 for (int i = 1; i <= homeManager.checkMaxHouses(); i++){
                     String formated;
-                    if(plugin.getConfig().contains("Players." + player.getName() + ".Home" + i +".Name")){
-                        formated = chatColor + "" + ChatColor.BOLD + i + ")" + ChatColor.RESET + " " + ChatColor.WHITE + plugin.getConfig().getString("Players." + player.getName() + ".Home" + i +".Name") +"\n";
+                    if(plugin.getConfig().contains("Players." + player.getUniqueId() + ".Home" + i +".Name")){
+                        formated = chatColor + "" + ChatColor.BOLD + i + ")" + ChatColor.RESET + " " + ChatColor.WHITE + plugin.getConfig().getString("Players." + player.getUniqueId() + ".Home" + i +".Name") +"\n";
                     }else{
                         formated = chatColor + "" + ChatColor.BOLD + i +")" + ChatColor.RESET + " " + ChatColor.WHITE + " \n";
                     }
