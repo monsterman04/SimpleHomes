@@ -23,7 +23,7 @@ public class Events implements Listener {
         final Player player = event.getPlayer();
 
         homeManager.joinSetup(player);
-        if(!plugin.getConfig().contains("Players." + player.getUniqueId() + ".PlayerName")){homeManager.migrateToUUID(player);}
+        if(plugin.getConfig().contains("Players." + player.getName() + ".CurrentHomes")){homeManager.migrateToUUID(player);}
 
         new BukkitRunnable() {
             @Override

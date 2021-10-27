@@ -37,6 +37,8 @@ public class HomeManager {
             plugin.getConfig().set("Players." + player.getUniqueId() + ".CurrentHomes", 0);
             plugin.saveConfig();
         }
+        plugin.getConfig().set("Players." + player.getUniqueId() + ".PlayerName", player.getName());
+        plugin.saveConfig();
         for (int i = 1; i <= maxHomes; i++) {
             if (!plugin.getConfig().contains("Players." + player.getUniqueId() + ".Home" + i)) {
                 plugin.getConfig().set("Players." + player.getUniqueId() + ".Home" + i + ".Empty", true);
@@ -318,7 +320,7 @@ public class HomeManager {
         new BukkitRunnable() {
             @Override
             public void run() {
-                player.sendMessage(ChatColor.GREEN + "There was a change in the way how your homes were stored. They were migrated to a new way successfully");
+                player.sendMessage(ChatColor.GREEN + "There was a change in the way how your homes were stored. If you had any saved homes, they were migrated to a new way successfully");
                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
             }
         }.runTaskLater(plugin, 40);
