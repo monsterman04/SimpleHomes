@@ -19,7 +19,6 @@ import javax.annotation.Nullable;
 import java.text.DecimalFormat;
 import java.util.*;
 
-@SuppressWarnings({"deprecation"})
 public class HomeManager {
 
     private static Main plugin;
@@ -146,7 +145,7 @@ public class HomeManager {
 
             //region [YES]
             TextComponent yes = new TextComponent("[YES]");
-            yes.setColor(net.md_5.bungee.api.ChatColor.of(new java.awt.Color(0, 196, 12)));
+            yes.setColor(net.md_5.bungee.api.ChatColor.DARK_GREEN);
             yes.setBold(true);
             yes.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/home " + home));
             yes.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Teleporting to " + home + ", Distance: " + getHomeDistance(player, homeNum))
@@ -167,7 +166,7 @@ public class HomeManager {
             }
 
             TextComponent diff = new TextComponent("[TAKE ME SOMEWHERE ELSE]");
-            diff.setColor(net.md_5.bungee.api.ChatColor.of(new java.awt.Color(196, 196, 196)));
+            diff.setColor(net.md_5.bungee.api.ChatColor.GRAY);
             diff.setBold(true);
             diff.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/selecthome"));
             diff.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(message.toString()).color(net.md_5.bungee.api.ChatColor.DARK_GRAY).create()));
@@ -248,7 +247,7 @@ public class HomeManager {
                     try {
                         bar.setProgress(time);
                     } catch (IllegalArgumentException exception) {
-                        player.sendMessage();
+                        player.sendMessage(exception.getMessage());
                     }
 
                 }

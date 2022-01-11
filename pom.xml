@@ -6,7 +6,7 @@
 
     <groupId>me.monsterman04</groupId>
     <artifactId>SimpleHomes</artifactId>
-    <version>1.5</version>
+    <version>1.6</version>
     <packaging>jar</packaging>
 
     <name>SimpleHomes</name>
@@ -39,7 +39,7 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <outputFile>C:\Users\janha\Desktop\Test Spigot Server\plugins\SimpleHomes.jar</outputFile>
+                            <outputFile>E:\Zaloha - listopad 2021\Test Spigot Server\plugins\SimpleHomes.jar</outputFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -67,8 +67,8 @@
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.17.1-R0.1-SNAPSHOT</version>
+            <artifactId>spigot</artifactId>
+            <version>1.15-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
