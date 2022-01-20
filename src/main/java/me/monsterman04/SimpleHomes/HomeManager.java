@@ -245,6 +245,7 @@ public class HomeManager {
 
                     bar.setTitle("Teleporting to " + name + " in: " + df.format(timeLeft));
                     try {
+                        if(time < 0){time = 0;}
                         bar.setProgress(time);
                     } catch (IllegalArgumentException exception) {
                         player.sendMessage(exception.getMessage());
