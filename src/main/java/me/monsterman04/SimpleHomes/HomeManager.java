@@ -1,5 +1,6 @@
 package me.monsterman04.SimpleHomes;
 
+import me.monsterman04.SimpleHomes.languages.Messages;
 import me.monsterman04.SimpleHomes.themes.Theme;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -141,14 +142,15 @@ public class HomeManager {
         if (firstKey.isPresent()) {
             String home = firstKey.get();
             int homeNum = getHomeByName(player , home);
-            player.sendMessage(theme.getChatColor() + "It looks like you're far from home. Would you like to be teleported to " + home +  "?");
+            player.sendMessage(theme.getChatColor() + ChatColor.stripColor(Messages.LOGIN_TELEPORT_SUGGESTION.getText().replace("%home%", home)));
 
             //region [YES]
-            TextComponent yes = new TextComponent("[YES]");
+            TextComponent yes = new TextComponent(Messages.YES_OPTION.getText());
             yes.setColor(net.md_5.bungee.api.ChatColor.DARK_GREEN);
             yes.setBold(true);
             yes.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/home " + home));
-            yes.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Teleporting to " + home + ", Distance: " + getHomeDistance(player, homeNum))
+            String msg = Messages.TELEPORT_SELECT_SUPPORT_TEXT.getText().replace("%home%", home).replace("%distance%", ""+getHomeDistance(player, homeNum));
+            yes.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(msg)
                     .color(net.md_5.bungee.api.ChatColor.DARK_GRAY).create()));
             //endregion
             //region [TAKE ME SOMEWHERE ELSE]
@@ -160,12 +162,12 @@ public class HomeManager {
                 if (distance != -1) {
                     formated = home2 + ": " + distance + " \n";
                 } else {
-                    formated = home2 + ": Not in this dimension" + " \n";
+                    formated = home2 + ": "+ Messages.HOME_IN_ANOTHER_DIMENSION.getText()  + " \n";
                 }
                 message.append(formated);
             }
 
-            TextComponent diff = new TextComponent("[TAKE ME SOMEWHERE ELSE]");
+            TextComponent diff = new TextComponent(Messages.ELSE_OPTION.getText());
             diff.setColor(net.md_5.bungee.api.ChatColor.GRAY);
             diff.setBold(true);
             diff.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/selecthome"));
@@ -201,12 +203,12 @@ public class HomeManager {
         }
 
         if(houseNumber > plugin.getConfig().getInt("MaxHomes")){
-            player.sendMessage(ChatColor.RED + "You have reached the maximum amount of homes you can have!");
+            player.sendMessage(Messages.HOME_LIMIT_REACHED.getText());
             return;
         }
         String name = name_;
         if(name == null){name = "Home";}
-        if(containsName(player, name)){ player.sendMessage(ChatColor.RED + "Please name your home differently, a home with this name already exists!");return;}
+        if(containsName(player, name)){ player.sendMessage(Messages.HOME_ALREADY_EXISTS.getText());return;}
 
         plugin.getConfig().set("Players." + player.getUniqueId() + ".Home" + houseNumber +".Empty", false);
         plugin.getConfig().set("Players." + player.getUniqueId() + ".Home" + houseNumber +".Name", name);
@@ -215,14 +217,14 @@ public class HomeManager {
         plugin.getConfig().set("Players." + player.getUniqueId() + ".CurrentHomes", houseNumber);
         plugin.saveConfig();
 
-        player.sendMessage(ChatColor.GREEN + name + " successfully created!");
+        player.sendMessage(Messages.HOME_CREATED.getText().replace("%home%", name));
     }
     public void teleport(Player player, Location location, String name){
         if (plugin.getConfig().getBoolean("TeleportDelayBar")) {
             int delay = plugin.getConfig().getInt("TeleportDelay");
             long time = System.currentTimeMillis() + (delay * 1000L);
 
-            BossBar bar = Bukkit.createBossBar("Teleporting to " + name + " in: ", theme.getBarColor(), BarStyle.SOLID);
+            BossBar bar = Bukkit.createBossBar(Messages.HOME_TELEPORT.getText().replace("%home%", name).replace("%time%", ""), theme.getBarColor(), BarStyle.SOLID);
             bar.setVisible(true);
             if (delay != 0) {
                 bar.addPlayer(player);
@@ -243,7 +245,7 @@ public class HomeManager {
                     double time = d  / (delay * 1000);
                     DecimalFormat df = new DecimalFormat("0.0");
 
-                    bar.setTitle("Teleporting to " + name + " in: " + df.format(timeLeft));
+                    bar.setTitle(Messages.HOME_TELEPORT.getText().replace("%home%", name).replace("%time%", df.format(timeLeft)));
                     try {
                         if(time < 0){time = 0;}
                         bar.setProgress(time);
@@ -276,10 +278,10 @@ public class HomeManager {
             plugin.getConfig().set("Players." + player.getUniqueId() + ".Home" + i +".Location", null);
             plugin.getConfig().set("Players." + player.getUniqueId() + ".CurrentHomes", plugin.getConfig().getInt("Players." + player.getUniqueId() + ".CurrentHomes") - 1);
             plugin.saveConfig();
-            player.sendMessage(ChatColor.GREEN + name + " successfully deleted!");
+            player.sendMessage(Messages.HOME_DELETED.getText().replace("%home%", name));
 
 
-        }else{player.sendMessage(ChatColor.RED + name + " not found!");}
+        }else{player.sendMessage(Messages.HOME_NOT_FOUND.getText().replace("%home%", name));}
     }
     public void reloadTheme(Theme theme){this.theme = theme;}
 
@@ -320,7 +322,7 @@ public class HomeManager {
         new BukkitRunnable() {
             @Override
             public void run() {
-                player.sendMessage(ChatColor.GREEN + "There was a change in the way how your homes were stored. If you had any saved homes, they were migrated to a new way successfully");
+                player.sendMessage(Messages.MIGRATION_SUCCESSFUL.getText());
                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
             }
         }.runTaskLater(plugin, 40);

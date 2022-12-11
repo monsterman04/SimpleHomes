@@ -22,10 +22,16 @@ commands:
   simplehomestheme:
     description: Using this command you can customise plugins Theme!
     usage: /<command> <get/set>
+  simplehomeslanguage:
+    description: Using this command you can customise plugins language!
+    usage: /<command> <language>
 permissions:
   simplehomes.homes:
     description: Allows you to create, delete and teleport to your homes (/sethome, /home, /deletehome, /selecthome commands)
     default: true
   simplehomes.theme:
     description: Allow you to set plugins theme (/simplehomestheme command)
+    default: op
+  simplehomes.language:
+    description: Allow you to set plugins language (/simplehomeslanguage command)
     default: op

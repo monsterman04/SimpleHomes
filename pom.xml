@@ -6,7 +6,7 @@
 
     <groupId>me.monsterman04</groupId>
     <artifactId>SimpleHomes</artifactId>
-    <version>1.6.1</version>
+    <version>1.7</version>
     <packaging>jar</packaging>
 
     <name>SimpleHomes</name>
@@ -39,7 +39,7 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <outputFile>E:\Zaloha - listopad 2021\Test Spigot Server\plugins\SimpleHomes.jar</outputFile>
+                            <outputFile>C:\Users\honzi\Desktop\Survival Server 1.18.2\plugins\SimpleHomes.jar</outputFile>
                         </configuration>
                     </execution>
                 </executions>

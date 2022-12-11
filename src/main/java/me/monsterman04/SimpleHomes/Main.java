@@ -2,8 +2,10 @@ package me.monsterman04.SimpleHomes;
 
 import me.monsterman04.SimpleHomes.commands.Commands;
 import me.monsterman04.SimpleHomes.commands.HomeTabComplete;
+import me.monsterman04.SimpleHomes.commands.LanguageTabComplete;
 import me.monsterman04.SimpleHomes.commands.ThemeTabComplete;
 import me.monsterman04.SimpleHomes.events.Events;
+import me.monsterman04.SimpleHomes.languages.LanguagesConfig;
 import me.monsterman04.SimpleHomes.themes.ThemeManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -42,9 +44,14 @@ public class Main extends JavaPlugin {
         Objects.requireNonNull(getCommand("selecthome")).setExecutor(new Commands());
         Objects.requireNonNull(getCommand("simplehomestheme")).setExecutor(new Commands());
         Objects.requireNonNull(getCommand("simplehomestheme")).setTabCompleter(new ThemeTabComplete());
+        Objects.requireNonNull(getCommand("simplehomeslanguage")).setExecutor(new Commands());
+        Objects.requireNonNull(getCommand("simplehomeslanguage")).setTabCompleter(new LanguageTabComplete());
         getServer().getPluginManager().registerEvents(new Events(this), this);
         getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[" + pluginDescriptionFile.getName() + "] Plugin started!");
         new VersionManager(this).checkVersion();
+
+        LanguagesConfig.setup(this);
+        LanguagesConfig.save();
 
         getConfig().options().copyDefaults(true);
         saveConfig();
@@ -85,8 +92,10 @@ public class Main extends JavaPlugin {
     public HomeManager getHomeManager() {
         return homeManager;
     }
-
     public ThemeManager getThemeManager() {
         return themeManager;
     }
+    public static Main getPlugin(){return Main.getPlugin(Main.class);}
+    public static PluginDescriptionFile getDescriptionFile(){return getPlugin().pluginDescriptionFile;}
+    public static String getSelectedLanguage(){return LanguagesConfig.getConfig().getString("Language");}
 }
